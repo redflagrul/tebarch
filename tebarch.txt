@@ -1,0 +1,28 @@
+[Arch Install Guide]
+
+cfdisk /dev/***
+
+swap partition
+root partition
+
+mkfs.ext4 /dev/root_partition
+mkswap /dev/swap_partition
+
+mount /dev/root_partition /mnt
+swapon /dev/swap_partition
+
+pacstrap -K /mnt base linux linux-firmware
+
+genfstab -U /mnt >> /mnt/etc/fstab
+arch-chroot /mnt
+mkinitcpio -P
+
+passwd root
+
+pacman -S grub networkmanager dhcpcd gnome-control-center gdm gnome-software-center flatpak grub nano gnome-terminal
+
+grub-mkconfig -o /boot/grub/grub.cfg
+
+grub-install
+
+
